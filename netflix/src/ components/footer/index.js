@@ -3,41 +3,36 @@ import {
   Container,
   Row,
   Column,
+  Link,
   Title,
   Text,
   Break,
-  Link,
 } from './styles/footer';
 
-export default function Footer({ childern, ...restProps }) {
-  return;
-  <Container {...restProps}>{childern}</Container>;
+export default function Footer({ children, ...restProps }) {
+  return <Container {...restProps}>{children}</Container>;
 }
 
-Footer.Row = function FooterRow({ childern, ...restProps }) {
-  return;
-  <Row {...restProps}>{childern}</Row>;
+Footer.Row = function FooterRow({ children, ...restProps }) {
+  return <Row {...restProps}>{children}</Row>;
 };
 
-Footer.Column = function FooterColumn({ childern, ...restProps }) {
-  return;
-  <Column {...restProps}>{childern}</Column>;
+Footer.Column = function FooterColumn({ children, ...restProps }) {
+  return <Column {...restProps}>{children}</Column>;
 };
 
-Footer.Text = function FooterText({ childern, ...restProps }) {
-  return;
-  <Text {...restProps}>{childern}</Text>;
+Footer.Link = function FooterLink({ children, ...restProps }) {
+  return <Link {...restProps}>{children}</Link>;
 };
 
-Footer.Title = function FooterTitle({ childern, ...restProps }) {
-  return;
-  <Title {...restProps}>{childern}</Title>;
-};
-Footer.Link = function FooterLink({ childern, ...restProps }) {
-  return;
-  <Link {...restProps}>{childern}</Link>;
+Footer.Title = function FooterTitle({ children, ...restProps }) {
+  return <Title {...restProps}>{children}</Title>;
 };
 
-Footer.Break = function FooterBreak({ childern, ...restProps }) {
-  return <Break {...restProps}>{childern}</Break>;
+Footer.Text = function FooterText({ children, ...restProps }) {
+  return <Text {...restProps}>{children}</Text>;
+};
+
+Footer.Break = function FooterBreak({ ...restProps }) {
+  return <Break {...restProps} />;
 };
