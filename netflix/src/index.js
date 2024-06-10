@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import 'normalize.css';
 import App from './App';
 import { GlobalStyles } from './Globalstyles';
+import { firebaseApp, firestore, auth } from './lib/firebase.prod';
 
 render(
   <>
