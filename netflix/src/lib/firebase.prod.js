@@ -20,9 +20,9 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-// import { seedDatabase } from '../seed';
+import { seedDatabase } from '../seed';
 
-const firebaseConfig = {
+const config = {
   apiKey: 'AIzaSyC8WnNWp_dgKeZ9ogOKglBItvTOyIiW4jw',
   authDomain: 'netflix-14eaa.firebaseapp.com',
   projectId: 'netflix-14eaa',
@@ -30,9 +30,11 @@ const firebaseConfig = {
   messagingSenderId: '863228942115',
   appId: '1:863228942115:web:a1998ba5c5656e68545e96',
 };
-// Initialize Firebase
-const firebaseapp = initializeApp(firebaseConfig);
 
-//const auth = getAuth(firestore);
+const firebaseApp = initializeApp(config);
+const firestore = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
 
-export { firebaseapp };
+seedDatabase(firestore);
+
+export { firebaseApp as firebase, firestore, auth };
