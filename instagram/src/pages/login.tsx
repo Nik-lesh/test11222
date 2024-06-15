@@ -5,7 +5,7 @@ import * as ROUTES from "../constants/routes";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 
-interface LoginProps {
+export interface LoginProps {
   navigate: NavigateFunction;
 }
 
