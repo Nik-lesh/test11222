@@ -1,10 +1,11 @@
 import { createContext } from "react";
 import { FirebaseApp } from "firebase/app";
 import { FieldValue as FirestoreFieldValue } from "firebase/firestore";
-import firebase from "firebase/app";
+import { Auth } from "firebase/auth";
 
-interface FirebaseContextProps {
-  firebase: firebase.FirebaseApp;
+export interface FirebaseContextProps {
+  firebase: FirebaseApp;
+  auth: Auth;
   FieldValue: typeof FirestoreFieldValue;
 }
 

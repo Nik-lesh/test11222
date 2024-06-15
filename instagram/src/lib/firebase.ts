@@ -3,7 +3,8 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 import { FirebaseApp } from "firebase/app";
 import { FieldValue as FieldValueType } from "firebase/firestore";
-
+import { getAuth, Auth } from "firebase/auth";
+//import { seedDatabase } from "../seed";
 const config = {
   apiKey: "AIzaSyBouE6QMn1C_Skqcw4PBBzA2JcXucE_MF8",
   authDomain: "instagram-8c9ac.firebaseapp.com",
@@ -14,7 +15,8 @@ const config = {
 };
 
 const firebaseApp: FirebaseApp = Firebase.initializeApp(config);
+const auth: Auth = getAuth(firebaseApp);
 const FieldValue: typeof FieldValueType = Firebase.firestore.FieldValue;
-console.log("firebaseApp", firebaseApp);
+//eedDatabase(firebaseApp);
 
-export { firebaseApp as firebase, FieldValue };
+export { firebaseApp as firebase, FieldValue, auth };
