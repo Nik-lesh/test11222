@@ -16,7 +16,8 @@ const config = {
 
 const firebaseApp: FirebaseApp = Firebase.initializeApp(config);
 const auth: Auth = getAuth(firebaseApp);
-const FieldValue: typeof FieldValueType = Firebase.firestore.FieldValue;
+const firestore = Firebase.firestore();
+const FieldValue = Firebase.firestore.FieldValue;
 //eedDatabase(firebaseApp);
 
-export { firebaseApp as firebase, FieldValue, auth };
+export { firebaseApp as firebase, firestore, FieldValue, auth };

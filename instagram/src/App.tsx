@@ -7,16 +7,17 @@ import {
   NavigateFunction,
 } from "react-router-dom";
 import Login from "./pages/login";
+import SignUp from "./pages/signup";
 import * as ROUTES from "./constants/routes";
 
 function App() {
-  const navigate: NavigateFunction = () => {}; // Define your navigate function here
+  const navigate: NavigateFunction = () => {};
 
   return (
     <Router>
       <Routes>
         <Route path={ROUTES.LOGIN} element={<Login navigate={navigate} />} />
-        {/* Other routes */}
+        <Route path={ROUTES.SIGN_UP} element={<SignUp navigate={navigate} />} />
       </Routes>
     </Router>
   );

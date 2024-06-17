@@ -26,7 +26,7 @@ export default function Login({ navigate }: LoginProps) {
     event.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, emailAddress, password); // Use the signInWithEmailAndPassword function correctly
+      await signInWithEmailAndPassword(auth, emailAddress, password);
       navigate(ROUTES.DASHBOARD);
     } catch (error: any) {
       setEmailAddress("");
