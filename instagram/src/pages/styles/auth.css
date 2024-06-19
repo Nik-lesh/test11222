@@ -1,0 +1,74 @@
+.container {
+  display: flex;
+  justify-content: space-between; /* Align children evenly between start and end */
+  align-items: center;
+  height: 100vh;
+  max-width: 100%;
+  margin: auto;
+  flex-direction: row; /* Align children in a row */
+}
+
+.phone-image {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  align-items: center;
+  max-width: 600px; /* Adjust the max width as needed */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 0; /* Remove margin-right to align the image with the form */
+}
+
+/* Form container styles */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  padding: 1rem;
+  border: 1px solid #dbdbdb;
+  background-color: #fff;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.form-container img {
+  width: 80%;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-container input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+}
+
+.form-container button {
+  background-color: #0095f6;
+  color: #fff;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form-container button:disabled {
+  opacity: 0.5;
+}
+
+/* Sign up link container */
+.signup-link-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #dbdbdb;
+  background-color: #fff;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
