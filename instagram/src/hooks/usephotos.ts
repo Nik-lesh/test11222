@@ -1,18 +1,6 @@
 import { useState, useEffect } from "react";
 import { getPhotos } from "../servies/firebase";
-
-interface User {
-  userId: string;
-  emailAddress: string;
-  following: string[];
-  dateCreated: number;
-}
-
-interface Photo {
-  photoId: number;
-  userId: string;
-  dateCreated: number;
-}
+import { Photo, User } from "../types";
 
 // Update the usePhotos hook
 export default function usePhotos(user: User | null) {
