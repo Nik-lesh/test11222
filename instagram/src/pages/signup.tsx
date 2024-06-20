@@ -16,7 +16,7 @@ interface SignUpProps {
   navigate: NavigateFunction; // Define the navigate prop
 }
 
-const SignUp: React.FC<SignUpProps> = ({ navigate }) => {
+export default function signup({ navigate }: SignUpProps) {
   const context = useContext(FirebaseContext);
   // Type assertion
   const { firebase } = context as FirebaseContextProps;
@@ -75,7 +75,9 @@ const SignUp: React.FC<SignUpProps> = ({ navigate }) => {
       <img
         src="/images/iphone-with-profile.jpg"
         alt="iPhone with Instagram app"
-        className="phone-image" // Apply the CSS class here
+
+        className="phone-image"
+
       />
       <div className="form-container">
         <h1 className="flex justify-center w-full">
@@ -128,6 +130,4 @@ const SignUp: React.FC<SignUpProps> = ({ navigate }) => {
       </div>
     </div>
   );
-};
-
-export default SignUp;
+}

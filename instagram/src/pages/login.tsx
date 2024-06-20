@@ -3,7 +3,8 @@ import { Link, NavigateFunction } from "react-router-dom";
 import FirebaseContext, { FirebaseContextProps } from "../context/firebase";
 import * as ROUTES from "../constants/routes";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import "./styles/auth.css"; // Import the CSS file
+import "./styles/auth.css";
+
 
 export interface LoginProps {
   navigate: NavigateFunction;

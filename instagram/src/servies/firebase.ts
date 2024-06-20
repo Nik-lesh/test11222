@@ -1,31 +1,6 @@
 import firebase from "firebase/compat";
 import { firestore, FieldValue } from "../lib/firebase";
-
-// Types for the returned data
-interface UserData {
-  userId: string;
-  username: string;
-  fullName: string;
-  emailAddress: string;
-  following: string[];
-  followers: string[];
-  dateCreated: number;
-  docId?: string;
-}
-
-interface PhotoData {
-  userId: string;
-  imageSrc: string;
-  caption: string;
-  likes: string[];
-  comments: { displayName: string; comment: string }[];
-  userLatitude: string;
-  userLongitude: string;
-  dateCreated: number;
-  docId?: string;
-  userLikedPhoto?: boolean;
-  username?: string;
-}
+import { User, Photo } from "../types";
 
 export async function doesUsernameExist(username: string): Promise<boolean> {
   const result = await firestore
@@ -36,7 +11,7 @@ export async function doesUsernameExist(username: string): Promise<boolean> {
   return result.docs.length > 0;
 }
 
-export async function getUserByUsername(username: string): Promise<UserData[]> {
+export async function getUserByUsername(username: string): Promise<User[]> {
   const result = await firestore
     .collection("users")
     .where("username", "==", username.toLowerCase())
@@ -47,11 +22,11 @@ export async function getUserByUsername(username: string): Promise<UserData[]> {
       ({
         ...item.data(),
         docId: item.id,
-      }) as UserData
+      }) as User
   );
 }
 
-export async function getUserByUserId(userId: string): Promise<UserData[]> {
+export async function getUserByUserId(userId: string): Promise<User[]> {
   const result = await firestore
     .collection("users")
     .where("userId", "==", userId)
@@ -62,14 +37,14 @@ export async function getUserByUserId(userId: string): Promise<UserData[]> {
       ({
         ...item.data(),
         docId: item.id,
-      }) as UserData
+      }) as User
   );
 }
 
 export async function getSuggestedProfiles(
   userId: string,
   following: string[]
-): Promise<UserData[]> {
+): Promise<User[]> {
   let query: firebase.firestore.Query = firestore.collection("users");
 
   if (following.length > 0) {
@@ -84,7 +59,7 @@ export async function getSuggestedProfiles(
       ({
         ...user.data(),
         docId: user.id,
-      }) as UserData
+      }) as User
   );
 }
 
@@ -121,7 +96,7 @@ export async function updateFollowedUserFollowers(
 export async function getPhotos(
   userId: string,
   following: string[]
-): Promise<PhotoData[]> {
+): Promise<Photo[]> {
   const result = await firestore
     .collection("photos")
     .where("userId", "in", following)
@@ -132,7 +107,7 @@ export async function getPhotos(
       ({
         ...photo.data(),
         docId: photo.id,
-      }) as PhotoData
+      }) as Photo
   );
 
   const photosWithUserDetails = await Promise.all(
@@ -150,9 +125,7 @@ export async function getPhotos(
   return photosWithUserDetails;
 }
 
-export async function getUserPhotosByUserId(
-  userId: string
-): Promise<PhotoData[]> {
+export async function getUserPhotosByUserId(userId: string): Promise<Photo[]> {
   const result = await firestore
     .collection("photos")
     .where("userId", "==", userId)
@@ -163,7 +136,7 @@ export async function getUserPhotosByUserId(
       ({
         ...photo.data(),
         docId: photo.id,
-      }) as PhotoData
+      }) as Photo
   );
 }
 
