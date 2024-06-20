@@ -75,7 +75,9 @@ export default function signup({ navigate }: SignUpProps) {
       <img
         src="/images/iphone-with-profile.jpg"
         alt="iPhone with Instagram app"
+
         className="phone-image"
+
       />
       <div className="form-container">
         <h1 className="flex justify-center w-full">

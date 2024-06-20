@@ -1,6 +1,7 @@
 import { createContext } from "react";
-import { User } from "../types";
+import { UserProps } from "../types";
 
-const UserContext = createContext<User | null>(null);
+const UserContext = createContext<UserProps | null>(null);
+
 
 export default UserContext;

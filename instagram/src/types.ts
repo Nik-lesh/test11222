@@ -6,6 +6,7 @@ export interface User {
   following: string[];
   followers: string[];
   dateCreated: number;
+  setActiveUser?: React.Dispatch<React.SetStateAction<UserProps | null>>;
 }
 
 export interface Photo {
