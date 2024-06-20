@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
+import Dashboard from "./pages/dashborard";
 import * as ROUTES from "./constants/routes";
 
 function App() {
@@ -18,9 +19,19 @@ function App() {
       <Routes>
         <Route path={ROUTES.LOGIN} element={<Login navigate={navigate} />} />
         <Route path={ROUTES.SIGN_UP} element={<SignUp navigate={navigate} />} />
+        <Route
+          path={ROUTES.DASHBOARD}
+          element={
+            <Dashboard
+              navigate={navigate}
+              user={{
+                uid: "",
+              }}
+            />
+          }
+        />
       </Routes>
     </Router>
   );
 }
-
 export default App;
