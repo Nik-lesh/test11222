@@ -1,4 +1,3 @@
-import React, { FC } from "react";
 interface FooterProps {
   caption: string;
   username: string;

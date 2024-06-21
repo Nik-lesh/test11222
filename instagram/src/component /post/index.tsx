@@ -5,16 +5,7 @@ import Actions from "./action";
 import Footer from "./footer";
 import Comments from "./comments";
 import { Photo } from "../../types";
-interface Content {
-  username: string;
-  imageSrc: string;
-  caption: string;
-  docId: string;
-  userLikedPhoto: boolean;
-  likes: string[];
-  comments: { displayName: string; comment: string }[];
-  dateCreated: number;
-}
+import { Content } from "./interface";
 
 interface PostProps {
   content: Content;

@@ -22,7 +22,7 @@ export default function AddComment({
   const context = useContext(FirebaseContext);
 
   // Type assertion
-  const { firebase, FieldValue } = context as FirebaseContextProps;
+  const { firebase } = context as FirebaseContextProps;
   const userContext = useContext(UserContext);
 
   // Ensure userContext is not null and has the correct properties
