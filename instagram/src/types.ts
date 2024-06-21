@@ -1,4 +1,5 @@
 export interface User {
+  user: any;
   userId: string;
   username: string;
   fullName: string;
@@ -10,6 +11,7 @@ export interface User {
 }
 
 export interface Photo {
+  docId: string;
   photoId: number;
   userId: string;
   imageSrc: string;
@@ -19,6 +21,8 @@ export interface Photo {
   userLatitude: string;
   userLongitude: string;
   dateCreated: number;
+  userLikedPhoto: boolean;
+  username: string;
 }
 
 export type UserProps = User;

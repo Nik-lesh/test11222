@@ -1,33 +1,29 @@
 import { useState, useEffect } from "react";
 import { getPhotos } from "../servies/firebase";
-import { Photo, User } from "../types";
+import { Photo } from "../types";
 
-// Update the usePhotos hook
-export default function usePhotos(user: User | null) {
+export default function usePhotos(user: {
+  [x: string]: any;
+  userId: string;
+  following: string[];
+}) {
   const [photos, setPhotos] = useState<Photo[] | null>(null);
 
   useEffect(() => {
-    async function getTimelinePhotos() {
-      // does the user actually follow people?
-      if (user?.following && user.following?.length > 0) {
-        const followedUserPhotos = await getPhotos(user.userId, user.following);
-
-        // Transform the PhotoData to Photo by adding a photoId
-        const transformedPhotos: Photo[] = followedUserPhotos.map(
-          (photo, index) => ({
-            ...photo,
-            photoId: index,
-          })
-        );
-
-        // re-arrange array to be newest photos first by dateCreated
-        transformedPhotos.sort((a, b) => b.dateCreated - a.dateCreated);
-        setPhotos(transformedPhotos);
+    async function fetchPhotos() {
+      if (user?.userId && user?.following) {
+        const fetchedPhotos = await getPhotos(user.userId, user.following);
+        const photosWithAdditionalData = fetchedPhotos.map((photo: any) => ({
+          ...photo,
+          username: photo.username || user.username,
+          userLikedPhoto: photo.userLikedPhoto || false,
+        }));
+        setPhotos(photosWithAdditionalData);
       }
     }
 
-    getTimelinePhotos();
-  }, [user?.userId, user?.following]);
+    fetchPhotos();
+  }, [user]);
 
   return { photos };
 }
