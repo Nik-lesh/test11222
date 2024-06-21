@@ -1,6 +1,7 @@
 import { useState, useContext, FormEvent, ChangeEvent } from "react";
 import FirebaseContext, { FirebaseContextProps } from "../../context/firebase";
 import UserContext from "../../context/user";
+import { arrayUnion, getFirestore, doc, updateDoc } from "firebase/firestore";
 
 interface AddCommentProps {
   docId: string;
@@ -21,23 +22,28 @@ export default function AddComment({
   const context = useContext(FirebaseContext);
 
   // Type assertion
-  const { firebase } = context as FirebaseContextProps;
+  const { firebase, FieldValue } = context as FirebaseContextProps;
   const userContext = useContext(UserContext);
-  const displayName = userContext?.user?.displayName || "";
 
-  const handleSubmitComment = (event: FormEvent) => {
+  // Ensure userContext is not null and has the correct properties
+  const displayName = userContext?.username || "";
+
+  const db = getFirestore(firebase);
+
+  const handleSubmitComment = async (event: FormEvent) => {
     event.preventDefault();
 
     setComments([...comments, { displayName, comment }]);
     setComment("");
 
-    return firebase
-      .firestore()
-      .collection("photos")
-      .doc(docId)
-      .update({
-        comments: FieldValue.arrayUnion({ displayName, comment }),
+    const commentRef = doc(db, "photos", docId);
+    try {
+      await updateDoc(commentRef, {
+        comments: arrayUnion({ displayName, comment }),
       });
+    } catch (error: any) {
+      console.log("error:", error);
+    }
   };
 
   return (
