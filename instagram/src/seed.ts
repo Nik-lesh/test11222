@@ -1,6 +1,33 @@
 import { FirebaseApp } from "firebase/app";
 import { collection, addDoc, getFirestore } from "firebase/firestore";
-import { User, Photo } from "./types";
+
+interface User {
+  userId: string;
+  username: string;
+  fullName: string;
+  emailAddress: string;
+  following: string[];
+  followers: string[];
+  dateCreated: number;
+}
+
+interface Comment {
+  displayName: string;
+  comment: string;
+}
+
+interface Photo {
+  photoId: number;
+  userId: string;
+  imageSrc: string;
+  caption: string;
+  likes: string[];
+  comments: Comment[];
+  userLatitude: string;
+  userLongitude: string;
+  dateCreated: number;
+}
+
 export async function seedDatabase(firebase: FirebaseApp) {
   const firestore = getFirestore(firebase);
 
