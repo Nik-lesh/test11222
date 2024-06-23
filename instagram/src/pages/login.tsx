@@ -5,6 +5,7 @@ import * as ROUTES from "../constants/routes";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "./styles/auth.css";
 
+
 export interface LoginProps {
   navigate: NavigateFunction;
 }

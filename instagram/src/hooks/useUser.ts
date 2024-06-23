@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { getUserByUserId } from "../servies/firebase";
-import { User } from "../types";
+import { UserProps } from "../types";
 
 export default function useUser(userId: string | null) {
-  const [activeUser, setActiveUser] = useState<User | null>(null);
+  const [activeUser, setActiveUser] = useState<UserProps | null>(null);
 
   useEffect(() => {
     async function getUserObjByUserId(userId: string) {

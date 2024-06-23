@@ -1,36 +1,36 @@
 import { useEffect } from "react";
 import Header from "../component /header";
+import Timeline from "../component /timeline";
+import Sidebar from "../component /sidebar";
 import useUser from "../hooks/useUser";
-import LoggedInUserContext from "../context/loggedInUser";
-import { NavigateFunction } from "react-router-dom";
+import LoggedInUserContext, {
+  LoggedInUserContextType,
+} from "../context/loggedInUser";
+import { User as FirebaseUser } from "../types";
+import { useNavigate } from "react-router-dom";
 
-// Define the type for the loggedInUser prop
-
-export interface DashboardProps {
-  navigate: NavigateFunction;
-  user: {
-    uid: string;
-    [key: string]: any;
-  };
+interface DashboardProps {
+  user: FirebaseUser;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({
-  user: loggedInUser,
-  navigate,
-}) => {
-  const { user, setActiveUser } = useUser(loggedInUser.uid);
+const Dashboard: React.FC<DashboardProps> = ({ user: loggedInUser }) => {
+  const { user, setActiveUser } = useUser(loggedInUser.user);
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.title = "Instagram";
   }, []);
-  if (!user) return null;
 
   return (
-    <div className="bg-gray-background">
-      <Header navigate={navigate} />
-      <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
-        {/* Include Timeline and Sidebar if needed */}
+    <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
+      <div className="bg-gray-background">
+        <Header navigate={navigate} />
+        <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
+          <Timeline />
+          <Sidebar />
+        </div>
       </div>
-    </div>
+    </LoggedInUserContext.Provider>
   );
 };
 

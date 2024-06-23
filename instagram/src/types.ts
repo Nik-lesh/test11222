@@ -1,5 +1,6 @@
 export interface User {
   user: any;
+  docId: string;
   userId: string;
   username: string;
   fullName: string;
@@ -7,6 +8,7 @@ export interface User {
   following: string[];
   followers: string[];
   dateCreated: number;
+  setActiveUser?: React.Dispatch<React.SetStateAction<UserProps | null>>;
 }
 
 export interface Photo {

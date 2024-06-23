@@ -30,7 +30,7 @@ export default function Actions({
 
   // Type assertion
   const { firebase } = context as FirebaseContextProps;
-  const db = getFirestore(firebase); // Use getFirestore to get the Firestore instance
+  const db = getFirestore(firebase);
 
   const handleToggleLiked = async () => {
     setToggleLiked((prevToggleLiked) => !prevToggleLiked);
