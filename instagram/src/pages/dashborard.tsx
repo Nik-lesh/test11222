@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import Header from "../component /header";
 import Timeline from "../component /timeline";
@@ -33,3 +34,4 @@ const Dashboard: React.FC<DashboardProps> = ({ user: loggedInUser }) => {
 };
 
 export default Dashboard;
+
