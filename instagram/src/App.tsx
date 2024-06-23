@@ -27,7 +27,7 @@ function App() {
             <Dashboard
               navigate={navigate}
               user={{
-                uid: "",
+                uid: "string ",
               }}
             />
           }
