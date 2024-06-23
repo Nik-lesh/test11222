@@ -3,9 +3,7 @@ import Header from "../component /header";
 import Timeline from "../component /timeline";
 import Sidebar from "../component /sidebar";
 import useUser from "../hooks/useUser";
-import LoggedInUserContext, {
-  LoggedInUserContextType,
-} from "../context/loggedInUser";
+import LoggedInUserContext from "../context/loggedInUser";
 import { User as FirebaseUser } from "../types";
 import { useNavigate } from "react-router-dom";
 
