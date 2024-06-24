@@ -1,39 +1,55 @@
-// App.tsx or another component
-import React from "react";
+import { lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
-  NavigateFunction,
+  Navigate,
 } from "react-router-dom";
-import Login from "./pages/login";
-import SignUp from "./pages/signup";
-
-import Dashboard from "./pages/dashborard";
-
+import ReactLoader from "./component /loader";
 import * as ROUTES from "./constants/routes";
+import UserContext from "./context/user";
+import useAuthListener from "./hooks/userAuth";
+import ProtectedRoute from "./helper/protectedRoutes";
+import { useNavigate } from "react-router-dom";
+const Login = lazy(() => import("./pages/login"));
+const SignUp = lazy(() => import("./pages/signup"));
+const Dashboard = lazy(() => import("./pages/dashborard"));
+const Profile = lazy(() => import("./pages/profile"));
+const NotFound = lazy(() => import("./pages/notfound"));
 
-function App() {
-  const navigate: NavigateFunction = () => {};
-
+export default function App() {
+  const { user } = useAuthListener();
+  const navigate = useNavigate();
   return (
-    <Router>
-      <Routes>
-        <Route path={ROUTES.LOGIN} element={<Login navigate={navigate} />} />
-        <Route path={ROUTES.SIGN_UP} element={<SignUp navigate={navigate} />} />
-        <Route
-          path={ROUTES.DASHBOARD}
-          element={
-            <Dashboard
-              navigate={navigate}
-              user={{
-                uid: "string ",
-              }}
+    <UserContext.Provider value={{ user }}>
+      <Router>
+        <Suspense fallback={<ReactLoader />}>
+          <Routes>
+            <Route
+              path={ROUTES.LOGIN}
+              element={<Login navigate={navigate} />}
             />
-          }
-        />
-      </Routes>
-    </Router>
+            <Route
+              path={ROUTES.SIGN_UP}
+              element={<SignUp navigate={navigate} />}
+            />
+            <Route path={ROUTES.PROFILE} element={<Profile />} />
+            <Route
+              path={ROUTES.DASHBOARD}
+              element={
+                <ProtectedRoute user={user}>
+                  {user ? (
+                    <Dashboard user={user} />
+                  ) : (
+                    <Navigate to={ROUTES.LOGIN} />
+                  )}
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </Router>
+    </UserContext.Provider>
   );
 }
-export default App;

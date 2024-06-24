@@ -3,18 +3,16 @@ import Header from "../component /header";
 import Timeline from "../component /timeline";
 import Sidebar from "../component /sidebar";
 import useUser from "../hooks/useUser";
-import LoggedInUserContext, {
-  LoggedInUserContextType,
-} from "../context/loggedInUser";
-import { User as FirebaseUser } from "../types";
+import LoggedInUserContext from "../context/loggedInUser";
+import { User } from "../types";
 import { useNavigate } from "react-router-dom";
 
 interface DashboardProps {
-  user: FirebaseUser;
+  user: User;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ user: loggedInUser }) => {
-  const { user, setActiveUser } = useUser(loggedInUser.user);
+  const { user, setActiveUser } = useUser(loggedInUser.userId);
   const navigate = useNavigate();
 
   useEffect(() => {
