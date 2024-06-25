@@ -11,6 +11,7 @@ import UserContext from "./context/user";
 import useAuthListener from "./hooks/userAuth";
 import ProtectedRoute from "./helper/protectedRoutes";
 import { useNavigate } from "react-router-dom";
+
 const Login = lazy(() => import("./pages/login"));
 const SignUp = lazy(() => import("./pages/signup"));
 const Dashboard = lazy(() => import("./pages/dashborard"));
@@ -20,8 +21,9 @@ const NotFound = lazy(() => import("./pages/notfound"));
 export default function App() {
   const { user } = useAuthListener();
   const navigate = useNavigate();
+
   return (
-    <UserContext.Provider value={{ user }}>
+    <UserContext.Provider value={user}>
       <Router>
         <Suspense fallback={<ReactLoader />}>
           <Routes>

@@ -118,7 +118,7 @@ export async function getPhotos(
       }
       const user = await getUserByUserId(photo.userId);
       const { username } = user[0];
-      return { ...photo, username, userLikedPhoto };
+      return {  ...photo, username, userLikedPhoto };
     })
   );
 

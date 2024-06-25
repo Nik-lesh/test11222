@@ -4,7 +4,7 @@ import * as ROUTES from "../constants/routes";
 import { useNavigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
-  user: string;
+  user: any;
   children: ReactElement;
 }
 

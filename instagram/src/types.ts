@@ -1,5 +1,4 @@
 export interface User {
-  user: any;
   docId: string;
   userId: string;
   username: string;
