@@ -1,0 +1,22 @@
+{
+  "name": "online",
+  "version": "1.0.0",
+  "description": "\"review app\"",
+  "type": "module",
+  "main": "server.ts",
+  "scripts": {
+    "start": "node dist/backend/server.js",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.1.0",
+    "axios": "^1.7.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
