@@ -1,7 +1,7 @@
 import React from "react";
 import { AppShellContainer } from "./components/Header";
 
-import Search from "./pages/Movies";
+import Search from "./pages/Movie/Movies";
 function App() {
   return (
     <>
