@@ -6,6 +6,7 @@ import {
   ColorScheme,
   ActionIcon,
   MantineProvider,
+  Footer,
 } from "@mantine/core";
 import LOGO2 from "../assets/LOGO2.png";
 import LOGO1 from "../assets/LOGO1.png";
@@ -16,7 +17,7 @@ type Props = {
 };
 
 export const AppShellContainer: React.FC<Props> = ({ children }) => {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
   const dark = colorScheme === "dark";
@@ -36,6 +37,8 @@ export const AppShellContainer: React.FC<Props> = ({ children }) => {
           header={
             <Header
               height={60}
+              pl={50}
+              pr={50}
               p="md"
               style={{
                 display: "flex",
@@ -54,17 +57,40 @@ export const AppShellContainer: React.FC<Props> = ({ children }) => {
 
               <ActionIcon
                 variant="outline"
-                color={dark ? "white" : "red"}
+                color={dark ? "gray" : "red"}
                 onClick={() => toggleColorScheme()}
-                title="Toggle color scheme"
+                title="theme"
               >
                 {dark ? <Sun size="1.1rem" /> : <MoonStars size="1.1rem" />}
               </ActionIcon>
             </Header>
           }
+          footer={
+            <Footer
+              height={50}
+              p="xs"
+              style={{
+                position: "fixed",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: dark ? "#182B31" : "#806350",
+                zIndex: 1000, // Ensure footer is above other content
+              }}
+            >
+              <span style={{ color: dark ? "white" : "black" }}>
+                © 2024. All rights reserved.
+              </span>
+            </Footer>
+          }
           styles={{
             main: {
-              backgroundColor: colorScheme === "dark" ? "#0A0E14" : "#EDD9CC",
+              paddingBottom: 50, // Ensure content is not hidden behind footer
+              minHeight: "100vh", // Full viewport height
+              backgroundColor: colorScheme === "dark" ? "#0A0E14" : "#F2E2D4",
             },
           }}
         >

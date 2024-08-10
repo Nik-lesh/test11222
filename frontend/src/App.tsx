@@ -1,15 +1,22 @@
 import React from "react";
 import { AppShellContainer } from "./components/Header";
+// import { AppShellComponents } from "./components/Components";
+import { Movies } from "./pages/Movie";
+import TrendingMovies from "./pages/Movie/RenderMovies";
+import RenderMovies from "./pages/Movie/RenderMovies";
+import { MantineProvider } from "@mantine/core";
 
-import Search from "./pages/Movie/Movies";
+
 function App() {
   return (
     <>
       {" "}
-      <AppShellContainer>
-        <Search />
-      </AppShellContainer>
-      <div className="App">hello</div>
+      <MantineProvider>
+        <AppShellContainer>
+          <RenderMovies />
+        </AppShellContainer>
+        <div className="App">hello</div>
+      </MantineProvider>
     </>
   );
 }

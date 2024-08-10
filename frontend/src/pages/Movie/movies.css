@@ -1,0 +1,42 @@
+/* Container for the masonry grid */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* Adjust column width */
+  gap: 16px; /* Space between items */
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Grid items with varying heights */
+.masonry-item {
+  background-color: #f0f0f0; /* Background color for items */
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Adjust height based on content */
+.masonry-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Optional: Add a hover effect */
+.masonry-item:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Ensure items span full width of their container */
+.masonry-item.full-width {
+  grid-column: span 2; /* Span two columns */
+}
+
+.masonry-item.full-width img {
+  height: 300px; /* Adjust as needed */
+}
