@@ -2,13 +2,15 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
+    "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "rootDir": "./backend"
   },
   "include": ["backend/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules, /dist"]
 }

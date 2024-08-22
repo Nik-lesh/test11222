@@ -82,15 +82,12 @@ export const getUpcomingMovies = async () => {
 // Today TV Shows
 export const getAiringTodayTVShows = async () => {
   try {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/tv/airing_today`,
-      {
-        params: {
-          api_key: API_KEY,
-          language: "en-US",
-        },
-      }
-    );
+    const response = await axios.get(`${baseURL}/tv/airing_today`, {
+      params: {
+        api_key: API_KEY,
+        language: "en-US",
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching airing today TV shows:", error);
@@ -100,16 +97,13 @@ export const getAiringTodayTVShows = async () => {
 // Top Rated Movies
 export const getTopRatedMovies = async () => {
   try {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/top_rated`,
-      {
-        params: {
-          api_key: API_KEY,
-          language: "en-US",
-          page: 1,
-        },
-      }
-    );
+    const response = await axios.get(`${baseURL}/movie/top_rated`, {
+      params: {
+        api_key: API_KEY,
+        language: "en-US",
+        page: 1,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching top-rated movies:", error);
@@ -119,16 +113,13 @@ export const getTopRatedMovies = async () => {
 // Top Rated TV Shows
 export const getTopRatedTVShows = async () => {
   try {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/tv/top_rated`,
-      {
-        params: {
-          api_key: API_KEY,
-          language: "en-US",
-          page: 1,
-        },
-      }
-    );
+    const response = await axios.get(`${baseURL}/tv/top_rated`, {
+      params: {
+        api_key: API_KEY,
+        language: "en-US",
+        page: 1,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching top-rated TV shows:", error);
@@ -138,16 +129,13 @@ export const getTopRatedTVShows = async () => {
 // Popular Movies by Language
 export const getPopularMoviesByLanguage = async (language: string) => {
   try {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular`,
-      {
-        params: {
-          api_key: API_KEY,
-          language: language,
-          page: 1,
-        },
-      }
-    );
+    const response = await axios.get(`${baseURL}/movie/popular`, {
+      params: {
+        api_key: API_KEY,
+        language: language,
+        page: 1,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching popular movies by language:", error);
@@ -157,16 +145,13 @@ export const getPopularMoviesByLanguage = async (language: string) => {
 // Popular TV Shows by Language
 export const getPopularTVShowsByLanguage = async (language: string) => {
   try {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/tv/popular`,
-      {
-        params: {
-          api_key: API_KEY,
-          language: language,
-          page: 1,
-        },
-      }
-    );
+    const response = await axios.get(`${baseURL}/tv/popular`, {
+      params: {
+        api_key: API_KEY,
+        language: language,
+        page: 1,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching popular TV shows by language:", error);
@@ -176,18 +161,13 @@ export const getPopularTVShowsByLanguage = async (language: string) => {
 // Search Movies
 export const searchMovies = async (query: string, type: "movie" | "tv") => {
   try {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/search/${type}`,
-      {
-        params: {
-          api_key: API_KEY,
-          query: query,
-          language: "en-US",
-          page: 1,
-          include_adult: true,
-        },
-      }
-    );
+    const response = await axios.get(`${baseURL}/search/${type}`, {
+      params: {
+        api_key: API_KEY,
+        query: query,
+        include_adult: true,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error searching for movies:", error);
@@ -228,21 +208,35 @@ export const getTvByGenre = async (genreId: number) => {
     throw error;
   }
 };
-// single moivie by id
-export const getMovieDetails = async (movieId: number) => {
+// single by id
+export const getDetails = async (type: "movie" | "tv", movieId: number) => {
   try {
-    const response = await axios.get(`${baseURL}/movie/${movieId}`, {
-      params: {
-        api_key: API_KEY,
-        language: "en-US",
-      },
-    });
-    return response.data;
+    const [detailsResponse, creditsResponse] = await Promise.all([
+      axios.get(`${baseURL}/${type}/${movieId}`, {
+        params: {
+          api_key: API_KEY,
+          language: "en-US",
+        },
+      }),
+      axios.get(`${baseURL}/${type}/${movieId}/credits`, {
+        params: {
+          api_key: API_KEY,
+          language: "en-US",
+        },
+      }),
+    ]);
+
+    return {
+      ...detailsResponse.data,
+      cast: creditsResponse.data.cast,
+      crew: creditsResponse.data.crew,
+    };
   } catch (error) {
     console.error("Error fetching movie details:", error);
     throw error;
   }
 };
+
 export const getTvDetails = async (tvId: number) => {
   try {
     const response = await axios.get(`${baseURL}/tv/${tvId}`, {

@@ -6,6 +6,7 @@ import {
   Group,
   Select,
   useMantineTheme,
+  Input,
 } from "@mantine/core";
 import Masonry from "react-masonry-css";
 
@@ -17,42 +18,72 @@ import {
   getPopularMoviesByLanguage,
   getPopularTVShows,
   getPopularTVShowsByLanguage,
-
   getTopRatedMovies,
   getTopRatedTVShows,
   getTrendingTVShows,
   getUpcomingMovies,
   getTvByGenre,
+  getDetails,
 } from "./assets/routes";
 import { MovieCard } from "./assets/CardView";
 import { movieGenres } from "./assets/genre";
-import useFetchData from "./assets/Hook";
+import useFetchData from "../../components/Hook";
 import { AppContainer } from "../../components/Container";
-import Search from "./search";
-import "./movies.css"
+// import Search from "./search";
+import { MagnifyingGlass } from "phosphor-react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const RenderMovies = () => {
   const [fetchmovies, setFetchMovies] = useState(() => getTrendingMovies);
   const { data: movies, loading } = useFetchData(fetchmovies);
   const [selectedCategory, setSelectedCategory] = useState("movies");
+  const [query, setQuery] = useState("");
+  const [type, setType] = useState<"movie" | "tv">("movie");
+  const [results, setResults] = useState<any[]>([]);
   const theme = useMantineTheme();
   const themeColor = theme.colorScheme === "dark" ? "#0A0E14" : "#F2E2D4";
-
   const handleMoviesOrTv = (value: string) => {
     setSelectedCategory(value);
-    console.log("Selected Category:", value);
-    switch (value) {
-      case "movies":
-        console.log("Setting fetch function to getTrendingMovies");
-        setFetchMovies(() => getTrendingMovies);
-        break;
-      case "tv":
-        setFetchMovies(() => getTrendingTVShows);
-        console.log("Setting fetch");
-        break;
-      default:
-        break;
+
+    if (value === "movies") {
+      setType("movie");
+      console.log("type", setType);
+      setFetchMovies(() => getTrendingMovies);
+    } else if (value === "tv") {
+      setType("tv");
+      setFetchMovies(() => getTrendingTVShows);
     }
+    setResults([]);
   };
+
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (query.trim() === "") return;
+
+    try {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/search/${type}`,
+        {
+          params: {
+            api_key: "efb0980b8b42689d1f254943fc972f43",
+            query: query,
+          },
+        }
+      );
+
+      if (response && response.data.results) {
+        console.log(response.data.results);
+        setResults(response.data.results);
+      } else {
+        console.error("No results found.");
+      }
+    } catch (error) {
+      console.error("Error fetching data from TMDb", error);
+    }
+    setFetchMovies(() => getTrendingMovies);
+  };
+
   const languageMappingsMovies: Record<string, string> = {
     english: "en",
     spanish: "es",
@@ -230,6 +261,18 @@ const RenderMovies = () => {
     { value: "korean", label: "Korean" },
   ];
 
+  const moviesToDisplay = results.length > 0 ? results : movies;
+  const navigate = useNavigate();
+  const handleCardClick = async (id: number, type: "movie" | "tv") => {
+    try {
+      const details = await getDetails(type, id);
+      console.log(details);
+      navigate(`/details/${type}/${id}`, { state: { details } });
+    } catch (error) {
+      console.error("Error fetching details", error);
+    }
+  };
+
   return (
     <>
       <AppContainer>
@@ -248,8 +291,22 @@ const RenderMovies = () => {
                 color: "#F2E2D4",
               }}
             />
-
-            <Search />
+            <form onSubmit={handleSearch || "No"}>
+              <Input
+                size="xs"
+                radius={16}
+                icon={<MagnifyingGlass size={16} />}
+                placeholder="Search..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                style={{
+                  width: 870,
+                  backgroundColor:
+                    theme.colorScheme === "dark" ? "#0A0E14" : "#F2E2D4",
+                  color: "#F2E2D4",
+                }}
+              />
+            </form>
           </Group>
         </Box>
         <Box>
@@ -265,8 +322,8 @@ const RenderMovies = () => {
                 width: 400,
                 backgroundColor: themeColor,
 
-                borderColor: themeColor, // Optional: change border color
-                color: theme.colorScheme === "dark" ? "#FFFFFF" : "#000000", // Optional: text color
+                borderColor: themeColor,
+                color: theme.colorScheme === "dark" ? "#FFFFFF" : "#000000",
               }}
             />
 
@@ -301,26 +358,23 @@ const RenderMovies = () => {
           </Group>
         </Box>
         <>
-          <div className="masonry-grid">
-            {movies.map((movie) => (
-              <div
+          <SimpleGrid cols={6} spacing={18}>
+            {moviesToDisplay.map((movie) => (
+              <MovieCard
+                id={movie.id}
+                type={type}
                 key={movie.id}
-                className={`masonry-item ${
-                  Math.random() > 0.5 ? "full-width" : ""
-                }`}
-              >
-                <MovieCard
-                  title={movie.title}
-                  posterPath={movie.poster_path}
-                  genres={movie.genre_ids.map((id: number) => movieGenres(id))}
-                  rating={movie.vote_average}
-                  voteAverage={movie.vote_count}
-                  language={movie.original_language}
-                  releaseDate={movie.release_date || "unknown"}
-                />
-              </div>
+                title={movie.title}
+                posterPath={movie.poster_path}
+                genres={movie.genre_ids.map((id: number) => movieGenres(id))}
+                rating={movie.vote_average}
+                voteAverage={movie.vote_count}
+                language={movie.original_language}
+                releaseDate={movie.release_date || "unknown"}
+                onClick={handleCardClick}
+              />
             ))}
-          </div>
+          </SimpleGrid>
         </>
       </AppContainer>
     </>
